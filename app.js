@@ -11,9 +11,22 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 // Body parser middleware (for handling JSON data)
 app.use(cookieParser());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://quicktalk-frontend-x6r6.onrender.com",
+];
+
 app.use(
   cors({
-    origin: "https://quicktalk-frontend-x6r6.onrender.com",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
