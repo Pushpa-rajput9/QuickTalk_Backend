@@ -63,9 +63,9 @@ export const LoginUser = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true, // ❌ only use `true` on HTTPS
+      secure: true,
       sameSite: "None",
-      maxAge: 1000 * 60 * 60,
+      domain: ".onrender.com", // <--- allows subdomain cookie sharing
     });
 
     res.status(200).json({
