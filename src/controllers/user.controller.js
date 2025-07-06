@@ -24,7 +24,7 @@ export const CreateUser = async (req, res) => {
       httpOnly: true,
       secure: true, // ❌ only use `true` on HTTPS
       sameSite: "None", // "Strict" | "Lax" | "None" (for cross-origin)
-      maxAge: 1000 * 60 * 60, // 1 hour
+      maxAge: 24 * 60 * 60 * 1000, // Optional: 1 day
     });
     // res.status(200).json({ message: "Cookie sent", token });
 
@@ -65,7 +65,8 @@ export const LoginUser = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "None",
-      domain: ".onrender.com", // <--- allows subdomain cookie sharing
+      maxAge: 24 * 60 * 60 * 1000, // Optional: 1 day
+      // domain: ".onrender.com", // <--- allows subdomain cookie sharing
     });
 
     res.status(200).json({
