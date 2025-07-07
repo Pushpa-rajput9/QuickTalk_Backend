@@ -21,12 +21,12 @@ export const CreateUser = async (req, res) => {
     await user.save();
 
     res.cookie("token", token, {
+      domain: ".onrender.com", // ✅ Allows cross-subdomain sharing
       httpOnly: true,
-      secure: true, // ❌ only use `true` on HTTPS
-      sameSite: "None", // "Strict" | "Lax" | "None" (for cross-origin)
-      maxAge: 24 * 60 * 60 * 1000, // Optional: 1 day
+      secure: true,
+      sameSite: "None",
+      maxAge: 24 * 60 * 60 * 1000,
     });
-    // res.status(200).json({ message: "Cookie sent", token });
 
     res.status(201).json({
       message: "User registered successfully",
@@ -62,11 +62,11 @@ export const LoginUser = async (req, res) => {
     console.log(token);
 
     res.cookie("token", token, {
+      domain: ".onrender.com", // ✅ Allows cross-subdomain sharing
       httpOnly: true,
       secure: true,
       sameSite: "None",
-      maxAge: 24 * 60 * 60 * 1000, // Optional: 1 day
-      // domain: ".onrender.com", // <--- allows subdomain cookie sharing
+      maxAge: 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({
