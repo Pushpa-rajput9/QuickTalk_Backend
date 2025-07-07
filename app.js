@@ -12,8 +12,8 @@ const PORT = process.env.PORT || 3000;
 // Body parser middleware (for handling JSON data)
 app.use(cookieParser());
 const allowedOrigins = [
-  "http://localhost:5173",
   "https://quicktalk-frontend-x6r6.onrender.com",
+  "http://localhost:5173",
 ];
 
 app.use(
