@@ -21,7 +21,7 @@ export const CreateUser = async (req, res) => {
     await user.save();
 
     res.cookie("token", token, {
-      domain: ".onrender.com", // ✅ Allows cross-subdomain sharing
+      domain: "quicktalk-backend-kni5.onrender.com", // ✅ Allows cross-subdomain sharing
       httpOnly: true,
       secure: true,
       sameSite: "None",
@@ -62,7 +62,7 @@ export const LoginUser = async (req, res) => {
     console.log(token);
 
     res.cookie("token", token, {
-      domain: ".onrender.com", // ✅ Allows cross-subdomain sharing
+      domain: "quicktalk-backend-kni5.onrender.com", // ✅ Allows cross-subdomain sharing
       httpOnly: true,
       secure: true,
       sameSite: "None",
