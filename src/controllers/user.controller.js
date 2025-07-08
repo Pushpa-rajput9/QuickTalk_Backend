@@ -62,7 +62,7 @@ export const LoginUser = async (req, res) => {
     console.log(token);
 
     res.cookie("token", token, {
-      domain: "quicktalk-backend-kni5.onrender.com", // ✅ Allows cross-subdomain sharing
+      domain: ".quicktalk-frontend-x6r6.onrender.com/", // ✅ Allows cross-subdomain sharing
       httpOnly: true,
       secure: true,
       sameSite: "None",
