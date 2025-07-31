@@ -7,6 +7,7 @@ dotenv.config();
 const userSchema = new mongoose.Schema(
   {
     identifier: {
+      // Email
       type: String,
       required: true,
       unique: true,
@@ -15,6 +16,24 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    username: {
+      type: String,
+      default: "",
+    },
+    phone: {
+      type: String,
+      default: "",
+    },
+
+    about: {
+      type: String,
+      default: "",
+    },
+    profilePic: { type: String }, // URL to avatar
+    isOnline: { type: Boolean, default: false }, // optional if using Redis
+
+    lastSeen: { type: Date, default: Date.now },
+    socketId: { type: String }, // optional: to target sockets
     accessToken: {
       type: String,
     },

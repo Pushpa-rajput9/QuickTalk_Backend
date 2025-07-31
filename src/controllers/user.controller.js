@@ -3,7 +3,8 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 export const CreateUser = async (req, res) => {
   try {
-    const { identifier, password } = req.body;
+    const { identifier, password, username, phone, about, profilePic } =
+      req.body;
 
     if (!identifier || !password) {
       return res.status(400).json({ message: "All fields are mandatory." });
@@ -14,14 +15,20 @@ export const CreateUser = async (req, res) => {
       return res.status(409).json({ message: "User already exists." });
     }
     //const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new UserNo({ identifier, password });
+    const user = new UserNo({
+      identifier,
+      password,
+      username,
+      phone,
+      about,
+      profilePic,
+    });
     const token = user.generateToken();
     user.accessToken = token;
 
     await user.save();
 
     res.cookie("token", token, {
-      domain: "quicktalk-backend-kni5.onrender.com", // ✅ Allows cross-subdomain sharing
       httpOnly: true,
       secure: true,
       sameSite: "None",

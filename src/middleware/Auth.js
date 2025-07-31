@@ -3,7 +3,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const authenticateUser = (req, res, next) => {
-  const token = req.cookies?.token;
+  // const token = req.cookies?.token;
+  const token = req.headers.authorization?.split(" ")[1]; // Extract token from `Bearer token`
 
   if (!token) return res.status(401).json({ message: "Not authenticated" });
 
