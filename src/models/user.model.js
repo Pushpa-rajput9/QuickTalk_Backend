@@ -29,7 +29,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    profilePic: { type: String }, // URL to avatar
+    profilePic: {
+      type: String,
+      default:
+        "https://www.pngkey.com/png/full/115-1150152_default-profile-picture-avatar-png-green.png",
+    }, // URL to avatar
     isOnline: { type: Boolean, default: false }, // optional if using Redis
 
     lastSeen: { type: Date, default: Date.now },
