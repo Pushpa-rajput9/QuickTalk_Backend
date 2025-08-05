@@ -96,14 +96,28 @@ export const LogoutUser = async (req, res) => {
   });
   res.status(200).json({ message: "Logout successful" });
 };
-export const checkAuth = (req, res) => {
-  const token = req.cookies.token;
-  if (!token) return res.status(401).json({ authenticated: false });
+// export const checkAuth = (req, res) => {
+//   const token = req.cookies.token;
+//   if (!token) return res.status(401).json({ authenticated: false });
 
+//   try {
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     return res.status(200).json({ authenticated: true, user: decoded });
+//   } catch (err) {
+//     return res.status(401).json({ authenticated: false });
+//   }
+// };
+
+export const getUserById = async (req, res) => {
+  const userId = req.params.id;
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    return res.status(200).json({ authenticated: true, user: decoded });
-  } catch (err) {
-    return res.status(401).json({ authenticated: false });
+    const user = await UserNo.findById(userId).select("-password -accessToken");
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("getUserById Error:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
