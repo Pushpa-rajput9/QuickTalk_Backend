@@ -2,7 +2,6 @@ import express from "express";
 import { sendOTP } from "../controllers/otp.controller.js";
 import { verifyOTP } from "../controllers/otp.controller.js";
 import {
-  checkAuth,
   CreateUser,
   getUserById,
   LoginUser,
@@ -17,6 +16,6 @@ router.post("/login", LoginUser);
 router.get("/:id", authenticateUser, getUserById);
 router.post("/logout", LogoutUser);
 router.post("/verify-otp", verifyOTP);
-router.get("/check-auth", checkAuth);
+//router.get("/check-auth", checkAuth);
 
 export default router;
