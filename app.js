@@ -1,7 +1,7 @@
 import express from "express";
 //import dotenv from "dotenv";
 import cors from "cors";
-import otpRoute from "./src/routes/otp.route.js";
+import userRoute from "./src/routes/UserRoute.js";
 import connectDB from "./src/db/db.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 // Body parser middleware (for handling JSON data)
-app.use(cookieParser());
+//app.use(cookieParser());
 const allowedOrigins = [
   "https://quicktalk-frontend-x6r6.onrender.com",
   "http://localhost:5173",
@@ -30,12 +30,14 @@ app.use(
     credentials: true, // <-- This is important
   })
 );
-// Handle preflight requests explicitly
-app.options("*", cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use("/api/v1/otp", otpRoute);
+app.use((req, res, next) => {
+  console.log("Incoming URL:", req.originalUrl);
+  next();
+});
+app.use("/api/v1/user", userRoute);
 
 connectDB()
   .then(() => {
