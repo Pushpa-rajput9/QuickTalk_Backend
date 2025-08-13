@@ -1,5 +1,5 @@
 import otpGenerator from "otp-generator";
-import { UserNo } from "../models/user.model.js"; // ✅ Adjust path as per your project
+import { User } from "../models/user.model.js"; // ✅ Adjust path as per your project
 import { sendSmsOtp } from "../middleware/otp.Auth.js"; // ✅ Update path if needed
 
 // Generate OTP (utility function)
@@ -23,8 +23,8 @@ export const sendOTP = async (req, res) => {
 
     const otp = generateOTP();
 
-    await UserNo.deleteMany({ identifier });
-    await UserNo.create({ identifier, otp });
+    await User.deleteMany({ identifier });
+    await User.create({ identifier, otp });
 
     sendSmsOtp(identifier, otp);
     console.log("Sending OTP to:", identifier, "OTP:", otp);
@@ -37,13 +37,13 @@ export const sendOTP = async (req, res) => {
 };
 export const verifyOTP = async (req, res) => {
   const { identifier, otp } = req.body;
-  const record = await UserNo.findOne({ identifier, otp });
+  const record = await User.findOne({ identifier, otp });
 
   if (!record)
     return res.status(400).json({ message: "Invalid or expired OTP" });
 
   // Optional: delete OTP after successful verification
-  //await UserNo.deleteMany({ identifier });
+  //await User.deleteMany({ identifier });
 
   res.status(200).json({ message: "OTP verified successfully" });
 };

@@ -1,4 +1,4 @@
-import { UserNo } from "../models/user.model.js";
+import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 export const CreateUser = async (req, res) => {
@@ -10,12 +10,12 @@ export const CreateUser = async (req, res) => {
       return res.status(400).json({ message: "All fields are mandatory." });
     }
 
-    const existingUser = await UserNo.findOne({ identifier });
+    const existingUser = await User.findOne({ identifier });
     if (existingUser) {
       return res.status(409).json({ message: "User already exists." });
     }
     //const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new UserNo({
+    const user = new User({
       identifier,
       password,
       username,
@@ -56,7 +56,7 @@ export const LoginUser = async (req, res) => {
     if (!identifier || !password) {
       return res.status(400).json({ message: "All fields are mandatory." });
     }
-    const user = await UserNo.findOne({ identifier });
+    const user = await User.findOne({ identifier });
     if (!user) {
       return res.status(401).json({ message: "User not found." });
     }
@@ -79,6 +79,11 @@ export const LoginUser = async (req, res) => {
     res.status(200).json({
       message: "Login successful",
       token,
+      user: {
+        id: user._id,
+        identifier: user.identifier,
+        token,
+      },
     });
   } catch (error) {
     console.error("LoginUser Error:", error);
@@ -108,7 +113,7 @@ export const LogoutUser = async (req, res) => {
 export const getUserById = async (req, res) => {
   const userId = req.params.id;
   try {
-    const user = await UserNo.findById(userId).select("-password -accessToken");
+    const user = await User.findById(userId).select("-password -accessToken");
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
